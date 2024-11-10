@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:note_app/constans.dart';
 import 'package:note_app/models/note_model.dart';
-
 part 'add_note_state.dart';
 
 class AddNoteCubit extends Cubit<AddNoteState> {
@@ -13,10 +12,10 @@ class AddNoteCubit extends Cubit<AddNoteState> {
     emit(AddNoteLoading());
     try {
       var notesBox = Hive.box<NoteModel>(kNotesBox);
-      emit(AddNoteSuccess());
       await notesBox.add(note);
+      emit(AddNoteSuccess());
     } catch (e) {
-      AddNoteFaiuler(e.toString());
+      emit(AddNoteFaiuler(e.toString()));
     }
   }
 }
